@@ -5,103 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Global Insight - Home</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    .highlight {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-      text-align: center;
-    }
-    .highlight h2 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
-    .highlight p {
-      font-size: 1rem;
-      margin-bottom: 15px;
-    }
-    .highlight a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 15px;
-      background: #002147;
-      color: #fff;
-      border-radius: 5px;
-      text-decoration: none;
-    }
-    .highlight a:hover {
-      background: #ff6600;
-    }
-  </style>
 </head>
 <body>
   <header>
-    <nav>
-      <h1>Global Insight</h1>
-      <ul>
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="world.html">World</a></li>
-        <li><a href="business.html">Business</a></li>
-        <li><a href="entertainment.html">Entertainment</a></li>
-        <li><a href="sports.html">Sports</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-      </ul>
-    </nav>
+    <h1>🌐 Global Insight</h1>
+    <p class="tagline">Delivering the latest headlines from around the world</p>
   </header>
 
   <main>
-    <h2>Top Highlights</h2>
-    <div id="highlightBox" class="highlight">
-      <h2>Loading...</h2>
-      <p>Please wait while we fetch the latest news.</p>
+    <h2>Top Stories</h2>
+
+    <!-- Business -->
+    <div class="news-card">
+      <h2>
+        <a href="https://news.abs-cbn.com/business/2025/9/19/bsp-sets-p500k-limit-for-cash-withdrawals-to-prevent-money-laundering" target="_blank">
+          BSP sets ₱500k limit for cash withdrawals to prevent money laundering
+        </a>
+      </h2>
+      <p>
+        The Bangko Sentral ng Pilipinas (BSP) has capped cash withdrawals at ₱500,000 to combat money laundering. 
+        Officials say this strengthens financial transparency and compliance with global standards.  
+        <em>Published: Sep 19, 2025</em>
+      </p>
+    </div>
+
+    <!-- World -->
+    <div class="news-card">
+      <h2>
+        <a href="https://news.abs-cbn.com/world/2025/9/18/un-warns-of-rising-sea-levels-threatening-millions-in-asia-pacific" target="_blank">
+          UN warns of rising sea levels threatening millions in Asia-Pacific
+        </a>
+      </h2>
+      <p>
+        A new UN climate report highlights severe risks for coastal communities across Asia-Pacific, with 
+        sea levels projected to displace millions by 2050 unless urgent action is taken.  
+        <em>Published: Sep 18, 2025</em>
+      </p>
+    </div>
+
+    <!-- Entertainment -->
+    <div class="news-card">
+      <h2>
+        <a href="https://news.abs-cbn.com/entertainment/2025/9/17/kathryn-bernardo-announces-new-film-project-with-netflix" target="_blank">
+          Kathryn Bernardo announces new film project with Netflix
+        </a>
+      </h2>
+      <p>
+        Actress Kathryn Bernardo revealed she will star in a new Netflix original movie, marking her first major 
+        international project. Fans celebrated the announcement across social media.  
+        <em>Published: Sep 17, 2025</em>
+      </p>
+    </div>
+
+    <!-- Sports -->
+    <div class="news-card">
+      <h2>
+        <a href="https://news.abs-cbn.com/sports/2025/9/16/gilas-pilipinas-secures-spot-in-2026-fiba-world-cup" target="_blank">
+          Gilas Pilipinas secures spot in 2026 FIBA World Cup
+        </a>
+      </h2>
+      <p>
+        Gilas Pilipinas has officially qualified for the 2026 FIBA World Cup after a dramatic win against Australia. 
+        The victory sparked nationwide celebration.  
+        <em>Published: Sep 16, 2025</em>
+      </p>
     </div>
   </main>
 
   <footer>
     <p>&copy; 2025 Global Insight. All Rights Reserved.</p>
   </footer>
-
-  <script>
-    const feeds = [
-      { url: "https://news.abs-cbn.com/rss/nation", label: "Nation" },
-      { url: "https://news.abs-cbn.com/rss/world", label: "World" },
-      { url: "https://news.abs-cbn.com/rss/business", label: "Business" },
-      { url: "https://news.abs-cbn.com/rss/entertainment", label: "Entertainment" },
-      { url: "https://news.abs-cbn.com/rss/sports", label: "Sports" }
-    ];
-
-    let currentFeed = 0;
-
-    async function loadHighlight() {
-      const { url, label } = feeds[currentFeed];
-      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${url}`;
-
-      try {
-        const res = await fetch(apiUrl);
-        const data = await res.json();
-        const article = data.items[0]; // only first/latest article
-
-        document.getElementById("highlightBox").innerHTML = `
-          <h2>${label}: ${article.title}</h2>
-          <p>${article.description.substring(0, 200)}...</p>
-          <a href="${article.link}" target="_blank">Read Full Story</a>
-        `;
-      } catch (err) {
-        document.getElementById("highlightBox").innerHTML = `
-          <h2>${label} News</h2>
-          <p>Failed to load news. Please refresh.</p>
-        `;
-      }
-
-      // Move to next feed after 6 seconds
-      currentFeed = (currentFeed + 1) % feeds.length;
-      setTimeout(loadHighlight, 6000);
-    }
-
-    loadHighlight();
-  </script>
 </body>
 </html>
