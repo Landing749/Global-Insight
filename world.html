@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Insight - World News</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>Global Insight</h1>
+      <ul>
+        <li><a href="index.html">Nation</a></li>
+        <li><a href="world.html" class="active">World</a></li>
+        <li><a href="business.html">Business</a></li>
+        <li><a href="entertainment.html">Entertainment</a></li>
+        <li><a href="sports.html">Sports</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>World News</h2>
+    <div class="news-container" id="news"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Global Insight. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    async function loadNews() {
+      const rssUrl = "https://news.abs-cbn.com/rss/world";
+      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
+      const res = await fetch(apiUrl);
+      const data = await res.json();
+
+      const newsContainer = document.getElementById("news");
+      data.items.forEach(item => {
+        const card = document.createElement("div");
+        card.classList.add("news-card");
+        card.innerHTML = `
+          <h2>${item.title}</h2>
+          <p>${item.description.substring(0, 150)}...</p>
+          <a href="${item.link}" target="_blank">Read More</a>
+        `;
+        newsContainer.appendChild(card);
+      });
+    }
+    loadNews();
+  </script>
+</body>
+</html>
