@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Insight - Home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .highlight {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .highlight h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .highlight p {
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+    .highlight a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 15px;
+      background: #002147;
+      color: #fff;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .highlight a:hover {
+      background: #ff6600;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>Global Insight</h1>
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="world.html">World</a></li>
+        <li><a href="business.html">Business</a></li>
+        <li><a href="entertainment.html">Entertainment</a></li>
+        <li><a href="sports.html">Sports</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Top Highlights</h2>
+    <div id="highlightBox" class="highlight">
+      <h2>Loading...</h2>
+      <p>Please wait while we fetch the latest news.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Global Insight. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const feeds = [
+      { url: "https://news.abs-cbn.com/rss/nation", label: "Nation" },
+      { url: "https://news.abs-cbn.com/rss/world", label: "World" },
+      { url: "https://news.abs-cbn.com/rss/business", label: "Business" },
+      { url: "https://news.abs-cbn.com/rss/entertainment", label: "Entertainment" },
+      { url: "https://news.abs-cbn.com/rss/sports", label: "Sports" }
+    ];
+
+    let currentFeed = 0;
+
+    async function loadHighlight() {
+      const { url, label } = feeds[currentFeed];
+      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${url}`;
+
+      try {
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+        const article = data.items[0]; // only first/latest article
+
+        document.getElementById("highlightBox").innerHTML = `
+          <h2>${label}: ${article.title}</h2>
+          <p>${article.description.substring(0, 200)}...</p>
+          <a href="${article.link}" target="_blank">Read Full Story</a>
+        `;
+      } catch (err) {
+        document.getElementById("highlightBox").innerHTML = `
+          <h2>${label} News</h2>
+          <p>Failed to load news. Please refresh.</p>
+        `;
+      }
+
+      // Move to next feed after 6 seconds
+      currentFeed = (currentFeed + 1) % feeds.length;
+      setTimeout(loadHighlight, 6000);
+    }
+
+    loadHighlight();
+  </script>
+</body>
+</html>
